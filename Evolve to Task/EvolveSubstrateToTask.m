@@ -12,15 +12,15 @@ rng(1,'twister');
 
 %% Setup
 % type of network to evolve
-config.resType = 'RoR_IA';                      % can use different hierarchical reservoirs. RoR_IA is default ESN.
+config.resType = 'RoR';                      % can use different hierarchical reservoirs. RoR_IA is default ESN.
 config.maxMinorUnits = 25;                  % num of nodes in subreservoirs
 config.maxMajorUnits = 1;                   % num of subreservoirs. Default ESN should be 1.
 config = selectReservoirType(config);       % get correct functions for type of reservoir
 config.nsga2 = 0;                           % not using NSGA
 
 %% Network details
-config.leakOn = 0;                          % add leak states
-config.AddInputStates = 0;                  % add input to states
+config.leakOn = 1;                          % add leak states
+config.AddInputStates = 1;                  % add input to states
 config.regParam = 10e-5;                    % training regulariser
 config.sparseInputWeights = 0;              % use sparse inputs
 config.restricedWeight = 0;                  % restrict weights between [0.2 0.4. 0.6 0.8 1]
@@ -30,14 +30,14 @@ config.evolveOutputWeights = 0;             % evolve rather than train
 %% Evolutionary parameters
 config.numTests = 1;                        % num of runs
 config.popSize = 100;                       % large pop better
-config.totalGens = 2000;                    % num of gens
+config.totalGens = 1000;                    % num of gens
 config.mutRate = 0.1;                       % mutation rate
 config.deme_percent = 0.2;                  % speciation percentage
 config.deme = round(config.popSize*config.deme_percent);
 config.recRate = 0.5;                       % recombination rate
 
 %% Task parameters
-config.dataSet = 'autoencoder';                 % Task to evolve for
+config.dataSet = 'Laser';                 % Task to evolve for
 [config.trainInputSequence,config.trainOutputSequence,config.valInputSequence,config.valOutputSequence,...
     config.testInputSequence,config.testOutputSequence,config.nForgetPoints,config.errType,config.queueType] = selectDataset(config.dataSet);
 
